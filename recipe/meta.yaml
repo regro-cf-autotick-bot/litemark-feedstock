@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/litemark-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/litemark-{{ version }}.tar.gz
   sha256: 30e5e7b61c66e86dfd089032ce4df8a51fdd17315051c315e99b04b1eba320e6
 
 build:
@@ -14,14 +14,14 @@ build:
     - litemark = litemark.__main__:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.5
+    - python {{ python_min }}
   run:
-    - python >=3.5
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -31,6 +31,7 @@ test:
     - xvfb-run --auto-servernum bash -c 'litemark' &  # [unix]
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/pyrustic/litemark
